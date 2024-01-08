@@ -1,11 +1,6 @@
-# W3HC Hardhat Template
+# NFT Registry
 
-This Hardhat template includes:
-
--   Typescript
--   Ethers v6
--   Open Zeppelin contracts
--   Hardhat Verify plugin
+Shows the current status of a given registered NFT.
 
 ## Supported networks
 
@@ -49,14 +44,6 @@ Deploy to Arthera Testnet:
 pnpm deploy:arthera
 ```
 
-## Check balance
-
-You can check the current signer wallet balance:
-
-```
-pnpm bal op-sepolia
-```
-
 ## Verify using Sourcify
 
 On Arthera Testnet:
@@ -65,32 +52,12 @@ On Arthera Testnet:
 pnpm sourcify:arthera 8
 ```
 
-## Mint
+## Check balance
 
-On Sepolia:
-
-```
-pnpm mint:sepolia 42
-```
-
-On Arthera Testnet:
+You can check the current signer wallet balance:
 
 ```
-pnpm mint:arthera 42
-```
-
-## Send
-
-On Sepolia:
-
-```
-pnpm send:sepolia 8
-```
-
-On Arthera Testnet:
-
-```
-pnpm send:arthera 8
+pnpm bal op-sepolia
 ```
 
 ## Versions
@@ -100,6 +67,12 @@ pnpm send:arthera 8
 -   Hardhat [v2.17.2](https://github.com/NomicFoundation/hardhat/releases/tag/hardhat%402.17.2)
 -   OpenZeppelin Contracts [v4.9.3](https://github.com/OpenZeppelin/openzeppelin-contracts/releases/tag/v4.9.3)
 -   Ethers [v6](https://docs.ethers.org/v6/)
+
+## Deployments
+
+### Arthera Testnet
+
+- [Jan 08 2024 11:23:01 AM (+01:00 UTC)](https://explorer-test.arthera.net/address/0x6075E6Fe61D4044649f29E5dD4c63E220642e104?tab=contract)
 
 ## Support
 
