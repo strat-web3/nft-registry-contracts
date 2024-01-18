@@ -94,5 +94,24 @@ export default async ({ getNamedAccounts, deployments }: any) => {
             }
             break
     }
+    const [signer] = await ethers.getSigners()
+    const Registry = await ethers.getContractFactory("Registry")
+    const registryInstance = new ethers.Contract(
+        registry.receipt.contractAddress,
+        Registry.interface,
+        signer
+    )
+    const init = await registryInstance.addEntry(
+        0,
+        "0x0000000000000000000000000000000000000000",
+        0,
+        0,
+        "0x0000000000000000000000000000000000000000",
+        1,
+        "0x0000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000"
+    )
+    const receiptInit = await init.wait()
+    console.log("\nInitialization done. ✅", msg(receiptInit.hash))
 }
 export const tags = ["Registry"]
