@@ -1,9 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.0;
+pragma solidity 0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Registry is Ownable {
+    enum AssetType {
+        ARTWORK,
+        ENS_DOMAIN_NAME,
+        COLLECTIBLE,
+        ATTESTATION,
+        KEY,
+        ANY
+    }
+
     enum Status {
         ACTIVE,
         DELETED,
@@ -14,77 +23,60 @@ contract Registry is Ownable {
     }
 
     struct Asset {
-        uint network;
+        uint256 network;
         address contractAddress;
-        uint id;
-        uint Status;
-        string registrar;
-        uint registryId;
+        uint256 tokenId;
+        string mediaFileHash;
+        string tokenURI;
+        uint256 AssetType;
+        bool tangible;
+        bool redeemable;
+        uint256 Status;
+        address creator;
+        address registrar;
+        address owner;
         string info;
-        string ensName;
     }
     Asset[] public assets;
 
-    event Registered(uint network, address contractAddress, uint id);
-    event Edited(uint network, address contractAddress, uint id);
+    event Registered(uint256 network, address contractAddress, uint256 tokenId);
+    event Edited(uint256 network, address contractAddress, uint256 tokenId);
 
     constructor() {}
 
     function addEntry(
-        uint _network,
+        uint256 _network,
         address _contractAddress,
-        uint _id,
-        uint _Status,
-        string memory _registrar,
-        uint _registryId,
-        string memory _info,
-        string memory _ensName
+        uint256 _tokenId,
+        string memory _mediaFileHash,
+        string memory _tokenURI,
+        uint256 _AssetType,
+        bool _tangible,
+        bool _redeemable,
+        uint256 _Status,
+        address _creator,
+        address _registrar,
+        address _owner,
+        string memory _info
     ) public onlyOwner {
         assets.push(
             Asset({
                 network: _network,
                 contractAddress: _contractAddress,
-                id: _id,
+                tokenId: _tokenId,
+                mediaFileHash: _mediaFileHash,
+                tokenURI: _tokenURI,
+                AssetType: _AssetType,
+                tangible: _tangible,
+                redeemable: _redeemable,
                 Status: _Status,
+                creator: _creator,
                 registrar: _registrar,
-                registryId: _registryId,
-                info: _info,
-                ensName: _ensName
+                owner: _owner,
+                info: _info
             })
         );
-        emit Registered(_network, _contractAddress, _id);
-    }
-
-    function editEntry(
-        uint _network,
-        address _contractAddress,
-        uint _id,
-        uint _Status,
-        string memory _registrar,
-        uint _registryId,
-        string memory _info,
-        string memory _ensName
-    ) public onlyOwner {
-        uint i = getAsset(_registryId);
-        assets[i].network = _network;
-        assets[i].contractAddress = _contractAddress;
-        assets[i].id = _id;
-        assets[i].Status = _Status;
-        assets[i].registrar = _registrar;
-        assets[i].info = _info;
-        assets[i].ensName = _ensName;
-        emit Edited(_network, _contractAddress, _id);
-    }
-
-    function getAsset(uint _registryId) public view returns (uint) {
-        uint result;
-
-        for (uint i; i < assets.length; i++) {
-            if (assets[i].registryId == _registryId) {
-                result = i;
-            }
-        }
-        return result;
+        emit Registered(_network, _contractAddress, _tokenId);
     }
 
     receive() external payable {
