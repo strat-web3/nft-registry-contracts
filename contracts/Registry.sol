@@ -42,7 +42,7 @@ contract Registry is Ownable {
     event Registered(uint256 network, address contractAddress, uint256 tokenId);
     event Edited(uint256 network, address contractAddress, uint256 tokenId);
 
-    constructor() {}
+    constructor() Ownable(msg.sender) {}
 
     function addEntry(
         uint256 _network,
