@@ -11,11 +11,12 @@ const {
     SEPOLIA_RPC_ENDPOINT_URL,
     SEPOLIA_PRIVATE_KEY,
     ETHERSCAN_API_KEY,
-    ARTHERA_TESTNET_RPC_ENDPOINT_URL,
-    ARTHERA_TESTNET_PRIVATE_KEY,
     OP_SEPOLIA_RPC_ENDPOINT_URL,
     OP_SEPOLIA_PRIVATE_KEY,
-    OP_ETHERSCAN_API_KEY
+    OP_ETHERSCAN_API_KEY,
+    AMOY_TESTNET_RPC_ENDPOINT_URL,
+    AMOY_TESTNET_PRIVATE_KEY,
+    AMOY_TESTNET_ETHERSCAN_API_KEY
 } = process.env
 
 const config: HardhatUserConfig = {
@@ -42,6 +43,18 @@ const config: HardhatUserConfig = {
                 OP_SEPOLIA_PRIVATE_KEY !== undefined
                     ? [OP_SEPOLIA_PRIVATE_KEY]
                     : []
+        },
+        amoy: {
+            // https://polygon.technology/blog/introducing-the-amoy-testnet-for-polygon-pos
+            // Verification: https://vkpatva.medium.com/guide-to-deploy-verify-smart-contract-on-amoy-using-hardhat-1b4f26a2dc78
+            chainId: 80002,
+            url:
+                AMOY_TESTNET_RPC_ENDPOINT_URL ||
+                "https://rpc-amoy.polygon.technology/",
+            accounts:
+                AMOY_TESTNET_PRIVATE_KEY !== undefined
+                    ? [AMOY_TESTNET_PRIVATE_KEY]
+                    : []
         }
     },
     solidity: {
@@ -58,6 +71,7 @@ const config: HardhatUserConfig = {
         apiKey: {
             sepolia: ETHERSCAN_API_KEY || "",
             "op-sepolia": OP_ETHERSCAN_API_KEY || ""
+            // amoy: AMOY_TESTNET_ETHERSCAN_API_KEY || ""
         },
         customChains: [
             {
@@ -68,6 +82,14 @@ const config: HardhatUserConfig = {
                     browserURL: "https://sepolia-optimism.etherscan.io"
                 }
             }
+            // {
+            //     network: "amoy",
+            //     chainId: 80002,
+            //     urls: {
+            //         apiURL: "https://www.oklink.com/api/v5/explorer/blockchain/summary?chainShortName=AMOY_TESTNET",
+            //         browserURL: "https://www.oklink.com/amoy"
+            //     }
+            // }
         ]
     }
 }

@@ -15,7 +15,7 @@ export default async ({ getNamedAccounts, deployments }: any) => {
 
     const registry = await deploy("Registry", {
         from: deployer,
-        args: [deployer.address],
+        args: [deployer],
         log: true
     })
 
@@ -69,7 +69,30 @@ export default async ({ getNamedAccounts, deployments }: any) => {
                 console.error(error)
             }
             break
+        case "amoy":
+            try {
+                console.log(
+                    "Registry contract deployed:",
+                    msg(registry.receipt.contractAddress)
+                )
+                // console.log("\nEtherscan verification in progress...")
+                // console.log(
+                //     "\nWaiting for 6 block confirmations (you can skip this part)"
+                // )
+                // await wait( * 1000)
+
+                // await hre.run("verify:verify", {
+                //     network: network.name,
+                //     address: registry.receipt.contractAddress,
+                //     constructorArguments: []
+                // })
+                // console.log("Etherscan verification done. ✅")
+            } catch (error) {
+                console.error(error)
+            }
+            break
     }
+
     const [signer] = await ethers.getSigners()
     const Registry = await ethers.getContractFactory("Registry")
     const registryInstance = new ethers.Contract(
