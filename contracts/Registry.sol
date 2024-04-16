@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity 0.8.19;
+pragma solidity 0.8.25;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -42,7 +42,7 @@ contract Registry is Ownable {
     event Registered(uint256 network, address contractAddress, uint256 tokenId);
     event Edited(uint256 network, address contractAddress, uint256 tokenId);
 
-    constructor() {}
+    constructor(address initialOwner) Ownable(initialOwner) {}
 
     function addEntry(
         uint256 _network,
