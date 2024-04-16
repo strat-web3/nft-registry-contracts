@@ -6,8 +6,6 @@ describe("Registry", function () {
     async function deployContracts() {
         const [deployer, admin, creator, acquirer] = await ethers.getSigners()
         const Registry = await ethers.getContractFactory("Registry")
-        console.log("deployer", deployer)
-        console.log("deployer.address", deployer.address)
         const registry = await Registry.deploy(String(deployer.address))
         await registry.connect(deployer).transferOwnership(admin.address)
         await registry
